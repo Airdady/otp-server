@@ -3,7 +3,7 @@ const OtpSystem = require('../../features/otp_system/otp.system.util');
 
 const optMiddleware = {
 	generateOtp: async (req, res) => {
-		const reqData = { to: req.params.to, message: req.params.message, expiry: 15, otplen: 5 };
+		const reqData = { to: req.params.to, message: req.params.message, expiry: 15, otplen: 6 };
 		OtpSystem.generateOtp(reqData, async (error, genRes) => {
 			if (error) return Resp(res, 400, error);
 			return Resp(res, 200, genRes.message, genRes.data)

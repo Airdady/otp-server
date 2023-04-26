@@ -22,7 +22,7 @@ const OtpSystemUtil = {
 					data: {
 						to: data.to,
 						code,
-						expiry: parseInt(moment().add(expiry, 'minutes').format('X')),
+						expiry: expiry,
 					},
 				}),
 		);
