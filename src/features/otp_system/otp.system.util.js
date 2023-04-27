@@ -32,7 +32,6 @@ const OtpSystemUtil = {
 			if (!res) return cb('Invalid verification details');
 			OtpSystem.updateOne({ to: res.to }, { expiry: moment().add(data.expiry, 'minutes').toISOString() }).then(() => {
 				SmsRouter.post(`/send`, {
-					from: data.senderId,
 					to,
 					content: data.message.replace('{code}', res.code),
 				})

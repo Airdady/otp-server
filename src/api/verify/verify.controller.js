@@ -3,7 +3,8 @@ const OtpSystem = require('../../features/otp_system/otp.system.util');
 
 const optMiddleware = {
 	generateOtp: async (req, res) => {
-		const reqData = { to: req.params.to, message: req.params.message, expiry: 15, otplen: 6 };
+		const { expiry, otplen } = req.query;
+		const reqData = { to: req.params.to, expiry: expiry || 15, otplen: otplen || 4 };
 		OtpSystem.generateOtp(reqData, async (error, genRes) => {
 			if (error) return Resp(res, 400, error);
 			return Resp(res, 200, genRes.message, genRes.data)
@@ -19,7 +20,8 @@ const optMiddleware = {
 
 	resendOtp: async (req, res) => {
 		const { to } = req.params;
-		OtpSystem.resendOtp({ to: req.params.to, message: req.params.message, expiry: 15, otplen: 5 }, to, (error, message) => {
+		const { expiry, otplen } = req.query;
+		OtpSystem.resendOtp({ to: req.params.to, expiry: expiry || 15, otplen: otplen || 5 }, to, (error, message) => {
 			return error ? Resp(res, 400, error) : Resp(res, 200, message);
 		});
 	},
